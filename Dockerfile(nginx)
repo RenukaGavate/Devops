@@ -1,0 +1,14 @@
+#Base os 
+FROM ubuntu
+
+#Dockerfile maintainer
+MAINTAINER "devops dev team"
+
+#Install nginx
+RUN apt-get update & apt install nginx -y
+
+#Exposing port
+EXPOSE 80
+
+#Start nginx
+CMD ["/usr/sbin/nginx"]
