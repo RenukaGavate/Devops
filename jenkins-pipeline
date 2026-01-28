@@ -1,0 +1,40 @@
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Checkout Code') {
+            steps {
+                git 'https://github.com/yourusername/yourrepo.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh 'npm install'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh 'npm test || echo "No tests available"'
+            }
+        }
+
+        stage('Docker Build') {
+            steps {
+                sh 'docker build -t nodejs-app .'
+            }
+        }
+
+        stage('Run Container') {
+            steps {
+                sh '''
+                docker stop nodeapp || true
+                docker rm nodeapp || true
+                docker run -d -p 3000:3000 --name nodeapp nodejs-app
+                '''
+            }
+        }
+    }
+}
