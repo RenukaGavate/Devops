@@ -16,6 +16,3 @@
         service:
             name: httpd
             state: started      
-
-
-handler
